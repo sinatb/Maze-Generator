@@ -1,19 +1,21 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.NCalc;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
-public class Maze : MonoBehaviour
+public class Maze  
 {
     private Cell[,] maze;
-    [SerializeField] private int width;
-    [SerializeField] private int height;
-    private void Awake()
+    private int width;
+    private int height;
+
+    public Cell GetCell(int x,int y)
     {
+        return maze[x, y];
+    }
+    public Maze(int width , int height)
+    {
+        this.height = height;
+        this.width = width;
         maze = new Cell[height, width];
         for (int i = 0; i < height; i++)
         {
@@ -80,7 +82,7 @@ public class Maze : MonoBehaviour
             return maze[bx - 1, by];
         return null;
     }
-    //
+    //a function to create a maze with recursive backtracking
     public void Generate(Cell curr, List<Cell> path)
     {
         if (path.Count == 0)

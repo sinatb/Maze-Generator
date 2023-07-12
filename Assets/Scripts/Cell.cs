@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cell : MonoBehaviour
+public class Cell 
 {
     private bool _isVisited = false;
     private int _x;
@@ -52,5 +52,10 @@ public class Cell : MonoBehaviour
     public void SetIsVisited()
     {
         _isVisited = true;
+    }
+
+    public List<bool> GetSituation()
+    {
+        return new List<bool>() { _topWall, _rightWall, _bottomWall, _leftWall };
     }
 }
