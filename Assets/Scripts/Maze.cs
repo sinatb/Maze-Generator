@@ -37,7 +37,7 @@ public class Maze
         List<Direction> RDirections = new List<Direction>();
         while (directions.Count > 0)
         {
-            int rnd = Random.Range(0, directions.Count-1);
+            int rnd = Random.Range(0, directions.Count);
             RDirections.Add(directions[rnd]);
             directions.RemoveAt(rnd);
         }
@@ -76,24 +76,23 @@ public class Maze
             return maze[bx, by + 1];
         if (dir == Direction.Right && bx < width - 1)
             return maze[bx + 1, by];
-        if (dir == Direction.Bottom && by > 1)
+        if (dir == Direction.Bottom && by > 0)
             return maze[bx, by - 1];
-        if (dir == Direction.Left && bx > 1)
+        if (dir == Direction.Left && bx > 0)
             return maze[bx - 1, by];
         return null;
     }
     //a function to create a maze with recursive backtracking
     public void Generate(Cell curr, List<Cell> path)
     {
+        curr.SetIsVisited();
         var cellDirs = GetRandomDirectionList();
-        Debug.Log(cellDirs[0]);
         for (var i = 0; i < cellDirs.Count; i++)
         {
             var c2 = GetNeighbour(curr, cellDirs[i]);
             if (c2 != null && !c2.GetIsVisited())
             {
                 DeleteWalls(curr,c2);
-                c2.SetIsVisited();
                 path.Add(c2);
                 Generate(c2,path);
             }
