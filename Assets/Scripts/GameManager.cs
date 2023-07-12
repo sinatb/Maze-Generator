@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     {
         maze = new Maze(width,height);
         List<Cell> path = new List<Cell>();
+        path.Add(maze.GetCell(0,0));
         maze.Generate(maze.GetCell(0,0),path);
         for (int i = 0; i < width; i++)
         {

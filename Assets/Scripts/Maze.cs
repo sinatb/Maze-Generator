@@ -21,7 +21,7 @@ public class Maze
         {
             for (int j = 0; j < width; j++)
             {
-                maze[i, j] = new Cell(i, j);
+                maze[j, i] = new Cell(j,i);
             }
         }
     }
@@ -76,18 +76,17 @@ public class Maze
             return maze[bx, by + 1];
         if (dir == Direction.Right && bx < width - 1)
             return maze[bx + 1, by];
-        if (dir == Direction.Bottom && by > 0)
+        if (dir == Direction.Bottom && by > 1)
             return maze[bx, by - 1];
-        if (dir == Direction.Left && bx > 0)
+        if (dir == Direction.Left && bx > 1)
             return maze[bx - 1, by];
         return null;
     }
     //a function to create a maze with recursive backtracking
     public void Generate(Cell curr, List<Cell> path)
     {
-        if (path.Count == 0)
-            return;
         var cellDirs = GetRandomDirectionList();
+        Debug.Log(cellDirs[0]);
         for (var i = 0; i < cellDirs.Count; i++)
         {
             var c2 = GetNeighbour(curr, cellDirs[i]);
@@ -99,6 +98,8 @@ public class Maze
                 Generate(c2,path);
             }
         }
+        if (path.Count == 1)
+            return;
         path.RemoveAt(path.Count-1);
         Generate(path[^1],path);
     }
