@@ -40,5 +40,17 @@ public class Cell : MonoBehaviour
                 break;
         }
     }
-    
+
+    public Vector2Int GetCoordinates()
+    {
+        return new Vector2Int(_x, _y);
+    }
+    public bool GetIsVisited()
+    {
+        return _isVisited;
+    }
+    public void SetIsVisited()
+    {
+        _isVisited = true;
+    }
 }
