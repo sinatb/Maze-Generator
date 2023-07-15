@@ -11,7 +11,8 @@ public class Cell
     private bool _rightWall;
     private bool _bottomWall;
     private bool _leftWall;
-
+    private int _group;
+    private Room _room;
     public Cell(int x,int y)
     {
         _x = x;
@@ -20,6 +21,8 @@ public class Cell
         _rightWall = true;
         _bottomWall = true;
         _leftWall = true;
+        _group = -1;
+        _room = null;
     }
 
     public void ClearWall(Direction dir)
@@ -53,9 +56,24 @@ public class Cell
     {
         _isVisited = true;
     }
-
+    public void SetGroup(int group)
+    {
+        _group = group;
+    }
+    public void SetRoom(Room room)
+    {
+        _room = room;
+    }
     public List<bool> GetSituation()
     {
         return new List<bool>() { _topWall, _rightWall, _bottomWall, _leftWall };
+    }
+    public int GetGroup()
+    {
+        return _group;
+    }
+    public Room GetRoom()
+    {
+        return _room;
     }
 }

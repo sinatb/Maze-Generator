@@ -6,15 +6,18 @@ public class Maze
     private Cell[,] maze;
     private int width;
     private int height;
-
+    private int numRooms;
+    private List<Room> rooms;
     public Cell GetCell(int x,int y)
     {
         return maze[x, y];
     }
-    public Maze(int width , int height)
+    public Maze(int width , int height,int numRooms)
     {
         this.height = height;
         this.width = width;
+        this.numRooms = numRooms;
+        rooms = new List<Room>(numRooms);
         maze = new Cell[height, width];
         for (int i = 0; i < height; i++)
         {
@@ -65,7 +68,61 @@ public class Maze
             c2.ClearWall(Direction.Bottom);
         }
     }
+    //Returns a random cell as a starting point for a new room
+    private Cell GetRoomStart(int roomw,int roomh)
+    {
+        //the starting point for rooms is from (10,10) to the end
+        int rndx = Random.Range(10, width - roomw);
+        int rndy = Random.Range(10, height - roomh);
+        return maze[rndx, rndy];
+    }
+    //A function to carve out a room in the maze from the random start
+    private void CarveRoom(Room r)
+    {
+        //store room values in loacl vars
+        int height = r.GetHeight();
+        int width = r.GetWidth();
+        Cell start = r.GetStart();
+        
+        for (int i = start.GetCoordinates().y; i < start.GetCoordinates().y + height; i++)
+        {
+            for (int j = start.GetCoordinates().x; j < start.GetCoordinates().x + width; j++)
+            {
+                DeleteWalls(maze[i,j],maze[i,j+1]);
+                DeleteWalls(maze[i,j],maze[i+1,j]);
+            }
+        }
+    }
+    //A function to set the room number of a group of cells
+    private void SetCellRoom(Room r)
+    {
+        int height = r.GetHeight();
+        int width = r.GetWidth();
+        Cell start = r.GetStart();
+        
+        for (int i = start.GetCoordinates().y; i < start.GetCoordinates().y + height; i++)
+        {
+            for (int j = start.GetCoordinates().x; j < start.GetCoordinates().x + width; j++)
+            {
+                maze[i,j].SetRoom(r);
+            }
+        }
+    }
     //Returns neighbouring cell of bcell in direction dir
+    private List<Cell> GetUngroupedCells()
+    {
+        List<Cell> ret = new List<Cell>();
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                if (maze[i,j].GetGroup() == -1 && maze[i,j].GetRoom()!=null)
+                    ret.Add(maze[i,j]);
+            }
+        }
+
+        return ret;
+    }
     private Cell GetNeighbour(Cell bcell,Direction dir)
     {
         var bx = bcell.GetCoordinates().x;
@@ -100,5 +157,20 @@ public class Maze
             return;
         path.RemoveAt(path.Count-1);
         Generate(path[^1],path);
+    }
+    //a function to generate a dungeon with set amount of rooms.
+    public void GenerateDungeon()
+    {
+        
+        for (int i = 0; i < numRooms-1; i++)
+        {
+            
+            int width = Random.Range(2, 9);
+            int height = Random.Range(2, 9);
+            Cell Start = GetRoomStart(width, height);
+            rooms.Add(new Room(Start, i, width, height));
+            CarveRoom(rooms[^1]);
+            SetCellRoom(rooms[^1]);
+        }
     }
 }

@@ -7,14 +7,16 @@ public class GameManager : MonoBehaviour
 
     public int width;
     public int height;
+    public int rooms;
     public GameObject cellPrefab;
     // Start is called before the first frame update
     void Start()
     {
-        maze = new Maze(width,height);
-        List<Cell> path = new List<Cell>();
-        path.Add(maze.GetCell(0,0));
-        maze.Generate(maze.GetCell(0,0),path);
+        maze = new Maze(width,height,rooms);
+//        List<Cell> path = new List<Cell>();
+//        path.Add(maze.GetCell(0,0));
+//        maze.Generate(maze.GetCell(0,0),path);
+        maze.GenerateDungeon();
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
