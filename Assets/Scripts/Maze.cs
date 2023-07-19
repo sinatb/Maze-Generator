@@ -73,8 +73,8 @@ public class Maze
     private Cell GetRoomStart(int roomw,int roomh)
     {
         //the starting point for rooms is from (10,10) to the end
-        int rndx = Random.Range(10, width - roomw);
-        int rndy = Random.Range(10, height - roomh);
+        int rndx = Random.Range(2, width - roomw);
+        int rndy = Random.Range(2, height - roomh);
         return maze[rndy, rndx];
     }
     //A function to carve out a room in the maze from the random start
