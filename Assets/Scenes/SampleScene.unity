@@ -297,8 +297,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: 50
-  height: 100
-  rooms: 10
+  height: 50
+  rooms: 15
   cellPrefab: {fileID: 6543649629817024580, guid: 74f5f09415d70ee448e8c8a4cd3d4a74,
     type: 3}
 --- !u!4 &1565256619

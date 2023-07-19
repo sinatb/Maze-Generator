@@ -13,9 +13,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         maze = new Maze(width,height,rooms);
-//        List<Cell> path = new List<Cell>();
-//        path.Add(maze.GetCell(0,0));
-//        maze.Generate(maze.GetCell(0,0),path);
         maze.GenerateDungeon();
         for (int i = 0; i < width; i++)
         {

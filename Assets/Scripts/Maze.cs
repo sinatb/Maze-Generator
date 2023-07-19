@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Maze  
@@ -75,11 +75,6 @@ public class Maze
         //the starting point for rooms is from (10,10) to the end
         int rndx = Random.Range(10, width - roomw);
         int rndy = Random.Range(10, height - roomh);
-        while (maze[rndy,rndx].GetRoom()!=null)
-        {
-            rndx = Random.Range(10, width - roomw);
-            rndy = Random.Range(10, height - roomh);
-        }
         return maze[rndy, rndx];
     }
     //A function to carve out a room in the maze from the random start
@@ -139,39 +134,40 @@ public class Maze
         var by = bcell.GetCoordinates().y;
 
         if (dir == Direction.Top && by < height - 1)
-            return maze[bx, by + 1];
+            return maze[by+1, bx];
         if (dir == Direction.Right && bx < width - 1)
-            return maze[bx + 1, by];
+            return maze[by, bx+1];
         if (dir == Direction.Bottom && by > 0)
-            return maze[bx, by - 1];
+            return maze[by-1, bx];
         if (dir == Direction.Left && bx > 0)
-            return maze[bx - 1, by];
+            return maze[by, bx-1];
         return null;
     }
     //a function to create a maze with recursive backtracking
-    public void Generate(Cell curr, List<Cell> path)
+    public void Generate(Cell curr, List<Cell> path,int group)
     {
+        Debug.Log(curr.GetCoordinates());
         curr.SetIsVisited();
+        curr.SetGroup(group);
         var cellDirs = GetRandomDirectionList();
         for (var i = 0; i < cellDirs.Count; i++)
         {
             var c2 = GetNeighbour(curr, cellDirs[i]);
-            if (c2 != null && !c2.GetIsVisited())
+            if (c2 != null && !c2.GetIsVisited() && c2.GetGroup()==-1 && c2.GetRoom()==null)
             {
                 DeleteWalls(curr,c2);
                 path.Add(c2);
-                Generate(c2,path);
+                Generate(c2,path,group);
             }
         }
         if (path.Count == 1)
             return;
         path.RemoveAt(path.Count-1);
-        Generate(path[^1],path);
+        Generate(path[^1],path,group);
     }
     //a function to generate a dungeon with set amount of rooms.
     public void GenerateDungeon()
     {
-        
         for (var i = 0; i < numRooms-1; i++)
         {
             var width = Random.Range(2, 9);
@@ -181,5 +177,7 @@ public class Maze
             CarveRoom(rooms[^1]);
             SetCellRoom(rooms[^1]);
         }
+        var paths = new List<Cell> {maze[0,0]};
+        Generate(maze[0,0],paths,0);
     }
 }
