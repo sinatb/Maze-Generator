@@ -197,7 +197,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372349864}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
@@ -296,8 +296,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca354eadbf2cb640862bd00115c5aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 30
-  height: 30
+  width: 50
+  height: 100
+  rooms: 10
   cellPrefab: {fileID: 6543649629817024580, guid: 74f5f09415d70ee448e8c8a4cd3d4a74,
     type: 3}
 --- !u!4 &1565256619

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
 public class Maze  
@@ -23,7 +24,7 @@ public class Maze
         {
             for (int j = 0; j < width; j++)
             {
-                maze[j, i] = new Cell(j,i);
+                maze[i, j] = new Cell(j,i);
             }
         }
     }
@@ -74,7 +75,12 @@ public class Maze
         //the starting point for rooms is from (10,10) to the end
         int rndx = Random.Range(10, width - roomw);
         int rndy = Random.Range(10, height - roomh);
-        return maze[rndx, rndy];
+        while (maze[rndy,rndx].GetRoom()!=null)
+        {
+            rndx = Random.Range(10, width - roomw);
+            rndy = Random.Range(10, height - roomh);
+        }
+        return maze[rndy, rndx];
     }
     //A function to carve out a room in the maze from the random start
     private void CarveRoom(Room r)
@@ -92,6 +98,10 @@ public class Maze
                 DeleteWalls(maze[i,j],maze[i+1,j]);
             }
         }
+        for (int i = start.GetCoordinates().y; i<start.GetCoordinates().y + height ; i++)
+            DeleteWalls(maze[i,start.GetCoordinates().x+width],maze[i+1,start.GetCoordinates().x+width]);
+        for (int i = start.GetCoordinates().x; i<start.GetCoordinates().x + width ; i++)
+            DeleteWalls(maze[start.GetCoordinates().y+height,i],maze[start.GetCoordinates().y+height,i+1]);
     }
     //A function to set the room number of a group of cells
     private void SetCellRoom(Room r)
@@ -162,12 +172,11 @@ public class Maze
     public void GenerateDungeon()
     {
         
-        for (int i = 0; i < numRooms-1; i++)
+        for (var i = 0; i < numRooms-1; i++)
         {
-            
-            int width = Random.Range(2, 9);
-            int height = Random.Range(2, 9);
-            Cell Start = GetRoomStart(width, height);
+            var width = Random.Range(2, 9);
+            var height = Random.Range(2, 9);
+            var Start = GetRoomStart(width, height);
             rooms.Add(new Room(Start, i, width, height));
             CarveRoom(rooms[^1]);
             SetCellRoom(rooms[^1]);

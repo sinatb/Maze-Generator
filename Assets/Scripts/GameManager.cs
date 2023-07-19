@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                var position = new Vector3(3.9f * j, 0, 3.9f * i);
+                var position = new Vector3(3.9f * i, 0, 3.9f * j);
                 GameObject cell = Instantiate(cellPrefab,
                     position,
                     Quaternion.identity,
