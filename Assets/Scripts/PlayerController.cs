@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
@@ -12,8 +13,14 @@ public class PlayerController : MonoBehaviour
     public float lookXLimit = 45.0f;
     public Camera playerCamera;
     public GameObject light;
+    private Light _light;
 
     // Update is called once per frame
+    private void Start()
+    {
+        _light = light.GetComponent<Light>();
+    }
+
     void Update()
     {
         PlayerInput();
@@ -27,10 +34,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             currSpeed = runSpeed;
-            Debug.Log("sag");
         }
         else
             currSpeed = speed;
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            _light.enabled = !_light.enabled;
+        }
         transform.Translate(Vector3.forward*(Time.deltaTime*deltaz*currSpeed));
         transform.Translate(Vector3.right*(Time.deltaTime*deltax*currSpeed));
         rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;

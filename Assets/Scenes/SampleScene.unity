@@ -197,7 +197,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372349864}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
@@ -363,6 +363,11 @@ PrefabInstance:
       propertyPath: m_SpotAngle
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 2352278359677925286, guid: cc4e9c2c1527d06499f80c3ea26e88f6,
+        type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2352278361261311162, guid: cc4e9c2c1527d06499f80c3ea26e88f6,
         type: 3}
       propertyPath: m_Name
@@ -423,6 +428,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2352278361261311164, guid: cc4e9c2c1527d06499f80c3ea26e88f6,
+        type: 3}
+      propertyPath: flare
+      value: 
+      objectReference: {fileID: 6810292898718401955, guid: c68638f42bf83894fb248f29eb75bad3,
+        type: 3}
     - target: {fileID: 2352278361261311164, guid: cc4e9c2c1527d06499f80c3ea26e88f6,
         type: 3}
       propertyPath: light
